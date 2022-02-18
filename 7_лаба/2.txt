@@ -1,0 +1,145 @@
+#include<iostream>
+#include<ctime>
+#include<cstdlib>
+using namespace std;
+
+//шаблон класса SumArray
+template <class T> 
+class SumArray
+{
+private:
+	//пол€ класса
+	int size;
+	T firstArr[INT16_MAX];
+	T secondArr[INT16_MAX];
+public:
+	//методы класса
+
+	//конструктор с аргументами, передаем только размер массива, т.к. сам массив заполн€ем здесь
+	SumArray(int s) {
+		this -> size = s;
+	}
+	//деструктор
+	~SumArray() {
+		cout << "очищено!" << endl;
+	}
+	//заполнение массива рандомными числами
+	void randArr() {
+		srand(time(NULL));
+		for (int i = 0; i < size; i++) {
+			firstArr[i] = (double)rand() / 100;
+
+		}
+		for (int i = 0; i < size; i++) {
+			secondArr[i] = (double)rand() / 100;
+
+		}
+	}
+	//вывод на консоль первого и второго массива
+	void print() {
+		for (int i = 0; i < size; i++) {
+			cout << "firstArr[" << i << "] = " << firstArr[i] << "\t";
+		}
+		cout << endl;
+		for (int i = 0; i < size; i++) {
+			cout << "secondArr[" << i << "] = " << secondArr[i] << "\t";
+		}
+		cout << endl<<endl;
+	}
+	//сложение двух массивов поэлементно
+	void sum() {
+		for (int i = 0; i < size; i++) {
+			cout << "Arr[" << i << "] = " << firstArr[i] + secondArr[i] << "\t";
+		}
+		cout << endl << endl;
+	}
+};
+// €вна€ специализаци€ обощенного класса дл€ char
+template <> 
+class SumArray<char>
+{
+private:
+	//пол€ класса
+	int size;
+	char firstArr[INT16_MAX];
+	char secondArr[INT16_MAX];
+public:
+	//методы класса
+
+	//конструктор с аргументами, передаем только размер массива, т.к. сам массив заполн€ем здесь
+	SumArray(int s) {
+		this->size = s;
+	}
+	//деструктор
+	~SumArray() {
+		cout << "очищено!" << endl;
+	}
+	//заполнение массива рандомными числами
+	void randArr() {
+		srand(time(NULL));
+		for (int i = 0; i < size; i++)
+			firstArr[i] = char('a' + rand() % ('z' - 'a'));
+		
+		for (int i = 0; i < size; i++)
+			secondArr[i] = char('a' + rand() % ('z' - 'a'));
+	}
+	//вывод на консоль первого и второго массива
+	void print() {
+
+		for (int i = 0; i < size; i++) {
+			cout << "firstArr[" << i << "] = " << firstArr[i] << "\t";
+
+		}
+		cout << endl;
+		
+		for (int i = 0; i < size; i++) {
+			cout << "secondArr[" << i << "] = " << secondArr[i] << "\t";
+		}
+		cout << endl << endl;
+	}
+	//сложение двух массивов поэлементно
+	void sum() {
+		for (int i = 0; i < size; i++) {
+			cout << "Arr[" << i << "] = " << firstArr[i] + secondArr[i] << "\t";
+		}
+		cout << endl << endl;
+	}
+
+};
+
+
+
+
+
+int main() {
+	setlocale(LC_ALL, "RUS");
+	//int size;
+	//cout << "¬ведите size: ";
+	//cin >> size;
+	
+	SumArray<int> obj1(5);
+	cout << "ћассивы типа int:" << endl;
+	obj1.randArr();
+	obj1.print();
+	cout << "—умма массивов:" << endl;
+	obj1.sum();
+	cout << "_________________________________________________________________________________________________________________" << endl;
+
+	SumArray<double> obj2(5);
+	cout << "ћассивы типа double:" << endl;
+	obj2.randArr();
+	obj2.print();
+	cout << "—умма массивов:" << endl;
+	obj2.sum();
+	cout << "_________________________________________________________________________________________________________________" << endl;
+
+	SumArray<char> obj3(5);
+	cout << "ћассивы типа char:" << endl;
+	obj3.randArr();
+	obj3.print();
+	cout << "—умма массивов:" << endl;
+	obj3.sum();
+
+	return 0;
+
+}

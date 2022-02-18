@@ -1,0 +1,85 @@
+#include<iostream>
+using namespace std;
+class Currency {//Абстрактный класс
+protected:
+	double value;
+	virtual void perevod() = 0;//чисто виртуальный метод
+	virtual void print() = 0;//чисто виртуальный метод
+};
+class Dollar :protected Currency {//ПРоизводный от класса Currency
+	double dollar;
+public:
+	void perevod() {//переопределение метода
+		value = dollar * 79.90;
+	}
+	void set(double value) {
+		this->dollar = value;
+	}
+	double get() {
+		return this->dollar;
+	}
+	void print() {//переопределение метода
+		cout << value << " рублей" << endl;
+	}
+};
+class Euro :protected Currency {//Производный класс от Currency
+	double euro;
+public:
+	void perevod() {//переопределение метода
+		value = euro * 87.65;
+	}
+	void set(double value) {
+		this->euro = value;
+	}
+	double get() {
+		return this->euro;
+	}
+	void print() {//переопределение метода
+		cout << value << " рублей" << endl;
+	}
+};
+int main() {
+	setlocale(LC_ALL, "rus");
+	Dollar dollar;
+	Euro euro;
+	while (true) {
+		int choose;
+		cout << "Выберите валюту для перевода:\n";
+		cout << "1 - Доллар\n2 - Евро\n0 - Выход\n";
+		cout << "Ответ пользователя: ";
+		cin >> choose;
+		if (choose == 0) {
+			exit(0);
+		}
+		else if (choose > 2) {
+			cout << "Ошибка\n";
+			break;
+		}
+		double value;
+		cout << "Введите валюту: ";
+		cin >> value;
+		if (value <= 0 || cin.fail()) {
+			cout << "Ошибка, некорректный ввод данных\n";
+			exit(0);
+		}
+		else {
+			if (choose == 1) {
+				dollar.set(value);
+				dollar.get();
+				dollar.perevod();
+				dollar.print();
+			}
+			else if (choose == 2) {
+				euro.set(value);
+				euro.get();
+				euro.perevod();
+				euro.print();
+			}
+		}
+
+		system("pause>null");
+		system("cls");
+	}
+
+	return 0;
+}

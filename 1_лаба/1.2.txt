@@ -1,0 +1,186 @@
+#include <iostream>
+#include <conio.h>
+#include <vector>
+#include <iomanip>
+#include <string>
+#include <Windows.h>
+using namespace std;
+
+class StudentGroup {
+private:
+	//поля класса
+	string surname;  //фамилия
+	string name;     //имя
+	int phone;       //номер телефона
+	string data;        //дата рождения
+	int zachetka;     //номер зачетки
+	
+
+public:
+	//методы класса
+	void vvod(StudentGroup& inp, vector<StudentGroup>& student) {              //ВВОД ИНФОРМАЦИИ О СТУДЕНТАХ
+		cout << "введите фамилию: ";  cin >> inp.surname;                                                  //
+		cout << "введите имя: "; cin >> inp.name;
+		cout << "введите номер телефона: ";
+		while (!(cin >> inp.phone)) {
+			cout << "Вы можете вводить только целочисленное значение. Повторите ввод :\n";
+			cin.clear();
+			while (cin.get() != '\n');
+		}
+
+		cout << "введите дату рождения, формат 24.08.2000 : "; cin >> inp.data;
+		cout << "введите номер зачетки: ";
+
+		while (!(cin >> inp.zachetka)) {
+			cout << "Вы можете вводить только целочисленное значение. Повторите ввод :\n";
+			cin.clear();
+			while (cin.get() != '\n');
+		}
+
+		student.push_back(inp);                     //СОХРАНЯЕМ ВСЮ ИНФОРМАЦИЮ В МАССИВ "student" С ПОМОЩЬЮ МЕТОДА push_back
+	}
+	void vyvod(vector<StudentGroup>& student) {      // ВЫВОДИМ ВСЕХ СТУДЕНТОВ НА ЭКРАН
+		cout << setw(16) << "Фамилия" << setw(16) << "Имя" << setw(16) << "Телефон" << setw(16) << "Дата рождения" << setw(16) << "Номер зачетки" << endl;
+		for (int i = 0; i < student.size(); i++) {
+			cout << setiosflags(ios::left) << setw(16) << student[i].surname;
+			cout << setiosflags(ios::left) << setw(16) << student[i].name;
+			cout << setiosflags(ios::left) << setw(16) << student[i].phone;
+			cout << setiosflags(ios::left) << setw(16) << student[i].data;
+			cout << setiosflags(ios::left) << setw(16) << student[i].zachetka;
+		}
+
+	}
+	void udalit(StudentGroup& inp, vector<StudentGroup>& student) {                           // СОРТИРУЕМ РЕЙСЫ ПО ПУНКТУ НАЗНАЧЕНИЯ
+		bool proverka = false;
+		int index;
+		string name;
+		int zach;
+		cout << "введите имя: "; cin >> name;
+		cout << "введите зачетку: "; cin >> zach;
+		for (int i = 0; i < student.size(); i++) {
+			if (name == student[i].name and zach==student[i].zachetka) {
+				index = i;
+				student.erase(student.begin() + index);
+				proverka = true;
+			}
+	
+		}
+		student.swap(student);
+		if (proverka==false) {
+			cout << "нет таких данных" << endl;
+		}
+		else cout << "студент удален" << endl;
+	}
+	void poisk_rojd(vector<StudentGroup>& student) {              //ПОИСК И ВЫВОД ПОЛНОЙ ИНФОРМАЦИИ ГОРОДОВ, КУДА ИМЕЮТСЯ РЕЙСЫ
+		int count = 0;
+		cout << "Поиск: ";
+		string data; 
+		cin >> data;
+		cout << setw(16) << "Фамилия" << setw(16) << "Имя" << setw(16) << "Телефон" << setw(16) << "Дата рождения" << endl;
+		for (int i = 0; i < student.size(); i++) {
+			if (data == student[i].data) {
+				cout << setiosflags(ios::left) << setw(16) << student[i].surname;
+				cout << setiosflags(ios::left) << setw(16) << student[i].name;
+				cout << setiosflags(ios::left) << setw(16) << student[i].phone;
+				cout << setiosflags(ios::left) << setw(16) << student[i].data << endl;
+				count++;
+			}
+		}
+		if (count == 0) {
+			cout << "Не найдено совпадений\n";
+		}
+	}
+	void poisk_tel(vector<StudentGroup>& student) {              //ПОИСК И ВЫВОД ПОЛНОЙ ИНФОРМАЦИИ ГОРОДОВ, КУДА ИМЕЮТСЯ РЕЙСЫ
+		int count = 0;
+		cout << "Поиск: ";
+		int phone;
+		cin >> phone;
+		cout << setw(16) << "Фамилия" << setw(16) << "Имя" << setw(16) << "Телефон" << setw(16) << "Дата рождения" << endl;
+		for (int i = 0; i < student.size(); i++) {
+			if (student[i].phone == phone) {
+				cout << setiosflags(ios::left) << setw(16) << student[i].surname;
+				cout << setiosflags(ios::left) << setw(16) << student[i].name;
+				cout << setiosflags(ios::left) << setw(16) << student[i].phone;
+				cout << setiosflags(ios::left) << setw(16) << student[i].data<< endl;
+				count++;
+			}
+		}
+		if (count == 0) {
+			cout << "Не найдено совпадений\n";
+		}
+	}
+	void poisk_fam(vector<StudentGroup>& student) {              //ПОИСК И ВЫВОД ПОЛНОЙ ИНФОРМАЦИИ ГОРОДОВ, КУДА ИМЕЮТСЯ РЕЙСЫ
+		int count = 0;
+		cout << "Поиск: ";
+		string name;
+		cin >> name;
+		cout << setw(16) << "Фамилия" << setw(16) << "Имя" << setw(16) << "Телефон" << setw(16) << "Дата рождения" << endl;
+		for (int i = 0; i < student.size(); i++) {
+			if (student[i].surname == name or student[i].name == name) {
+				cout << setiosflags(ios::left) << setw(16) << student[i].surname;
+				cout << setiosflags(ios::left) << setw(16) << student[i].name;
+				cout << setiosflags(ios::left) << setw(16) << student[i].phone;
+				cout << setiosflags(ios::left) << setw(16) << student[i].data << endl;
+				count++;
+			}
+		}
+		if (count == 0) {
+			cout << "Не найдено совпадений\n";
+		}
+	}
+};
+
+
+void menu() {                                             //ГЛАВНАЯ МЕНЮШКА, УПРАВЛЯЕТ ПОСЛЕДОВАТЕЛЬНОСТЬЮ ВЫЗОВА ВСЕХ МЕТОДОВ КЛАССА
+	vector<StudentGroup> student;
+	StudentGroup s;
+	while (true) {
+		system("cls");
+		cout << "1 - ввести данные" << endl;
+		cout << "2 - вывод данных" << endl;
+		cout << "3 - поиск студента" << endl;
+		cout << "4 - удалить данные" << endl;
+		cout << "0 - выход" << endl;
+		cout << "Ответ пользователя: ";
+		int chouse;
+		while (!(cin >> chouse)) {
+			cout << "Вы можете вводить только целочисленное значение. Повторите ввод :\n";
+			cin.clear();
+			while (cin.get() != '\n');
+		}
+		switch (chouse)
+		{
+		case 1: s.vvod(s, student); _getch();  break;
+		case 2: s.vyvod(student); _getch(); break;
+		case 3:
+			cout << "Выберите признак по которому будет осуществляться поиск:\n1.Фамилия\n2.Номер телефона\n3.Дата рождения\n4.Выход " << endl;
+			cout << "Ответ пользователя: ";
+			int chouse;
+			while (!(cin >> chouse)) {
+				cout << "Вы можете вводить только целочисленное значение. Повторите ввод :\n";
+				cin.clear();
+				while (cin.get() != '\n');
+			}
+			switch (chouse)
+			{
+			case 1: s.poisk_fam(student); _getch();  break;
+			case 2: s.poisk_tel(student); _getch();  break;
+			case 3: s.poisk_rojd(student); _getch();  break;
+			case 0: cout << "назад в меню ..."; _getch();  break;
+			default: cout << "\n\n некорректный ввод. используйте цифры 1 - 4 для управления и 0 для выхода\n"; _getch(); break;
+			}_getch(); break;
+		case 4: s.udalit(s, student); _getch();  break;
+
+		case 0: exit(1);
+		default: cout << "\n\n некорректный ввод. используйте цифры 1 - 4 для управления и 0 для выхода\n"; _getch(); break;
+		}
+	}
+
+}
+int main() {                         //ГЛАВНАЯ ФУНКЦИЯ MAIN, КОТОРАЯ МЕНЯ ЯЗЫК НА КИРИЛЛИЦУ И ВЫЗЫВАЕТ МЕНЮ
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+	setlocale(LC_ALL, "RUS");
+	menu();
+}
+

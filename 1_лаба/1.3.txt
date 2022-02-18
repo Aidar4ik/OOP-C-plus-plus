@@ -1,0 +1,151 @@
+#include <iostream>
+#include <conio.h>
+#include <vector>
+#include <iomanip>
+#include <string>
+#include <Windows.h>
+#include <fstream>
+
+using namespace std;
+
+class Stack {
+private:
+	//поля класса
+	struct {
+		int item;        //элемент стека
+		Stack* next;     //указатель на next
+	};
+	Stack* top = NULL;
+
+public:
+	//методы класса
+	void push(int elem) {              //ВВОД ИНФОРМАЦИИ О СТУДЕНТАХ
+
+		Stack* pv = new Stack;
+		pv->item = elem;
+		pv->next = top;
+		top = pv;
+		//СОХРАНЯЕМ ВСЮ ИНФОРМАЦИЮ В МАССИВ "student" С ПОМОЩЬЮ МЕТОДА push_back
+	}
+	void printStack() {      // ВЫВОДИМ ВСЕХ СТУДЕНТОВ НА ЭКРАН
+		Stack* pv = top;
+
+		while (pv != NULL) {
+			cout << pv->item << " ";
+			pv = pv->next;
+		}
+		cout << "\n";
+		delete pv;
+		
+	}
+
+	int pop() {
+		if (isEmpty()) {
+			cout << "стек пуст" << endl;
+		}
+		else {
+			int temp = top->item;
+			Stack* pv = top;
+			top = top->next;
+			delete pv;
+			return temp;
+		}
+	}
+	void getStackSize() {
+		int sz = 0;
+		Stack* pv = top;
+
+		while (pv != NULL)
+		{
+			sz++;
+			pv = pv->next;
+		}
+		cout << sz << "\n";
+		delete pv;
+	}
+
+	bool isEmpty()
+	{
+		return top ? false : true;
+	}
+	void infile() {
+		ifstream file("trains.txt");
+		if (file) {
+			while (!file.eof()) {
+				int elem;
+
+				file >> elem;
+				push(elem);
+
+			}
+		}
+	}
+};
+
+
+void menu() {                                             //ГЛАВНАЯ МЕНЮШКА, УПРАВЛЯЕТ ПОСЛЕДОВАТЕЛЬНОСТЬЮ ВЫЗОВА ВСЕХ МЕТОДОВ КЛАССА
+	Stack TrainBase, OneTrain, TwoTrain;
+	
+		
+		
+	while (true) 
+	{
+		system("cls");
+		cout << "1 - ввод данных" << endl;
+		cout << "2 - вывод данных" << endl;
+		cout << "3 - удаление" << endl;
+		cout << "4 - кол-во элементов" << endl;
+		cout << "5 - запись из файла" << endl;
+		cout << "6 - разделить на вагоны" << endl;
+		cout << "0 - выход" << endl;
+		cout << "Ответ пользователя: ";
+		int chouse;
+		while (!(cin >> chouse)) {
+			cout << "Вы можете вводить только целочисленное значение. Повторите ввод :\n";
+			cin.clear();
+			while (cin.get() != '\n');
+		}
+		switch (chouse){
+		
+		case 1:	cout << "\n\nДобавление элемента в стек.\n\n Введите значение, которое хотите добавить: ";
+			int elem;
+			while (!(cin >> elem))
+			{
+				cout << "\nМожно вводить только целочисленное значение. Повторите ввод: ";
+				cin.clear();
+				while (cin.get() != '\n');
+			}
+			TrainBase.push(elem); _getch();  break;
+
+		case 2: TrainBase.printStack(); _getch(); break;
+		case 3: TrainBase.pop(); _getch(); break;
+		case 4: TrainBase.getStackSize(); _getch(); break;
+		case 5: TrainBase.infile(); _getch(); break;
+		case 6:
+			while (!TrainBase.isEmpty()) {
+				int elem = TrainBase.pop();
+				switch (elem)
+				{
+				case 0: OneTrain.push(elem); break;
+				case 1: TwoTrain.push(elem); break;
+				default: break;
+				}
+			}
+			cout << "Первый вагон: ";
+			  OneTrain.printStack();
+			  cout << "Второй вагон: ";
+			  TwoTrain.printStack();
+                          _getch(); break;
+		case 0: exit(1);
+		default: cout << "\n\n некорректный ввод. используйте цифры 1 - 4 для управления и 0 для выхода\n"; _getch(); break;
+		}
+	}
+}
+
+int main() {                         //ГЛАВНАЯ ФУНКЦИЯ MAIN, КОТОРАЯ МЕНЯ ЯЗЫК НА КИРИЛЛИЦУ И ВЫЗЫВАЕТ МЕНЮ
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+	setlocale(LC_ALL, "RUS");
+	menu();
+}
+

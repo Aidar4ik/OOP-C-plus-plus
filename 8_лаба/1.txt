@@ -1,0 +1,54 @@
+#include <iostream>
+#include <process.h> //для функции exit
+using namespace std;
+const int Limit = 5; //размер массива
+
+class safeArray {
+private:
+	int arr[Limit];
+public:
+	//класс ислючений для safeArray
+	class Arrover1{};
+
+	//установка значения элемента массива
+	void putel(int i, int elValue) {
+
+		if (i < 0 || i >= Limit) {
+			throw Arrover1();
+		}
+		arr[i] = elValue;
+	
+	}
+	
+	//получение значения элемента массива
+	int getel(int i) const {
+		if (i < 0 || i >= Limit) {
+			throw Arrover1();
+		}
+		return arr[i];
+	}
+};
+
+int main() {
+	setlocale(LC_ALL, "rus");
+	safeArray sal;
+	int val, i = 1;
+	try{
+		//задаём и показываем значения элементов
+		
+		while (true) {
+			cout << "Введите значение: ";
+			cin >> val;
+			sal.putel(i, val);
+			sal.getel(i);
+			i++;
+		} 
+		
+		
+	}
+	catch (safeArray::Arrover1) {   //обработчик
+		cout << "Ошибка overflow - выход за границы массива!" << endl;
+	}
+		
+    return 0;
+}

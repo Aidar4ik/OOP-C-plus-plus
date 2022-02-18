@@ -1,0 +1,112 @@
+#include <iostream>
+using namespace std;
+
+//родительский класс Дисплей(Display)
+class Display {
+public:
+	//поля класса
+	string monitorType; //тип монитора
+	int longColor;      //количество цветов
+	int x_resolution;   //разрешение по оси х  
+	int y_resolution;   //разрешение по оси у
+	//методы класса
+	Display(string addMonitor, int addLong, int addX, int addY) { //конструктор с аргументами
+		monitorType = addMonitor;
+		longColor = addLong;
+		x_resolution = addX;
+		y_resolution = addY;
+	}
+	void output1() {  //размещение информации о классе-родителе на консоли
+		cout << "Тип монитора: " << monitorType << "\n";
+		cout << "Количество цветов: " << longColor << "\n";
+		cout << "Разрешение по оси x: " << x_resolution << "\n";
+		cout << "Разрешение по оси y: " << y_resolution << "\n";
+	}
+
+};
+
+//родительский класс Материнская плата(MotherBoard)
+class MotherBoard {
+public:
+	//поля класса
+	int processor; //тип процессора
+	int speed;     //скорость процессора
+	int RAM;       //объем оперативной памяти
+	//методы класса
+	MotherBoard(int addPro, int addSpe, int addRAM) {  //конструктор с агрументами
+		processor = addPro;
+		speed = addSpe;
+		RAM = addRAM;
+	}
+	void output2() {  //размещение информации о классе-родителе на консоли
+		cout << "Тип процессора: " << processor << "\n";
+		cout << "Скорость процессора: " << speed << "\n";
+		cout << "Объём оперативной памяти: " << RAM << "\n";
+	}
+
+};
+
+//класс - потомок компьютер (Computer).
+//механизм наследования public
+class Computer : public Display, public MotherBoard {
+	//поля класса
+	string CompMark; //марка компьютера 
+	int hardDisk;    //объем жесткого диска 
+//методы класса
+public:
+	Computer(string addMonitor, int addLong, int addX, int addY, int addPro, int addSpe, int addRAM, string addMark, int addHard)  //rконструктор с агрументами
+		:Display(addMonitor, addLong, addX, addY), MotherBoard(addPro, addSpe, addRAM) {
+		this->CompMark = addMark;
+		this->hardDisk = addHard;
+	}
+	void show() {  //размещение информации о компьютере
+		cout << "Марка компьютера: " << CompMark << "\n";
+		cout << "Объём жесткого диска: " << hardDisk << "\n";
+		cout << "Тип процессора: " << processor << "\n";
+		cout << "Скорость процессора: " << speed << "\n";
+		cout << "Объём оперативной памяти: " << RAM << "\n";
+		cout << "Тип монитора: " << monitorType << "\n";
+		cout << "Количество цветов: " << longColor << "\n";
+		cout << "Разрешение по оси x: " << x_resolution << "\n";
+		cout << "Разрешение по оси y: " << y_resolution << "\n";
+	}
+
+};
+
+int main() {
+	setlocale(LC_ALL, "rus");
+	string monitorType, CompMark;
+	int longColor, x_resolution, y_resolution, processor, speed, RAM, hardDisk;
+
+	cout << "Марка компьютера: "; cin >> CompMark;
+	cout << "Объём жесткого диска: "; cin >> hardDisk;
+	cout << "Тип процессора: "; cin >> processor;
+	cout << "Скорость процессора: "; cin >> speed;
+	cout << "Объём оперативной памяти: "; cin >> RAM;
+	cout << "Тип монитора: "; cin >> monitorType;
+	cout << "Количество цветов: "; cin >> longColor;
+	cout << "Разрешение по оси x: "; cin >> x_resolution;
+	cout << "Разрешение по оси y: "; cin >> y_resolution;
+	cout << "\n\n\n";
+	Computer comp(monitorType, longColor, x_resolution, y_resolution, processor, speed, RAM, CompMark, hardDisk);  //Создаём объект компьютер
+
+	cout << "Класс родитель - Display" << endl;
+	cout << "++++++++++++++++++++++++++++++++++++++++" << endl;
+	comp.output1();
+	cout << "++++++++++++++++++++++++++++++++++++++++" << endl << endl;
+
+	cout << "Класс родитель - MotherBoard" << endl;
+	cout << "++++++++++++++++++++++++++++++++++++++++" << endl;
+	comp.output2();
+	cout << "++++++++++++++++++++++++++++++++++++++++" << endl << endl;
+
+	cout << "Класс потомок - Computer" << endl;
+	cout << "++++++++++++++++++++++++++++++++++++++++" << endl;
+	comp.show();
+	cout << "++++++++++++++++++++++++++++++++++++++++" << endl << endl;
+	system("pause>NULL");
+	return 0;
+}
+
+
+

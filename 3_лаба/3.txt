@@ -1,0 +1,112 @@
+#include<iostream>
+#include<string>
+#include<iomanip>
+#include <conio.h>
+using namespace std;
+class tatra;
+class kamaz {
+private:
+	string name_kamaz;
+	int	Fast_1, Fast_2, Fast_3;
+	friend class tatra;
+public:
+	void set() {
+		cout << "Введите наименование грузовика: ";
+		cin >> name_kamaz;
+		cout << "Введите скорость  по равнинам = ";
+		cin >> Fast_1;
+		cout << "Введите скорость  по пустыне = ";
+		cin >> Fast_2;
+		cout << "Введите скорость  по горам = ";
+		cin >> Fast_3;
+	}
+
+	void output() {
+		cout << setiosflags(ios::left) << setw(18) << name_kamaz << setw(18) << Fast_1 << setw(18) << Fast_2 << setw(18)
+			<< Fast_3 << (Fast_1 + Fast_2 + Fast_3) / 3 << endl;
+	}
+	friend int FrCreater(kamaz& t, tatra& j);
+};
+class tatra {
+private:
+	string name_tatra;
+	int	Fast1, Fast2, Fast3;
+public:
+	void set() {
+		cout << "Введите наименование: ";
+		cin >> name_tatra;
+		cout << "Введите скорость  по равнинам = ";
+		cin >> Fast1;
+		cout << "Введите скорость по пустыне = ";
+		cin >> Fast2;
+		cout << "Введите скорость  по горам = ";
+		cin >> Fast3;
+	}
+	void output2() {
+		cout << setiosflags(ios::left) << setw(18) << name_tatra << setw(18) << Fast1 << setw(18) << Fast2 << setw(18)
+			<< Fast3 << (Fast1 + Fast2 + Fast3) / 3 << endl;
+	}
+	friend int FrCreater(kamaz& t, tatra& j);
+};
+int FrCreater(kamaz& t, tatra& j)
+{
+	int ka = 0, ta = 0;
+	ka = t.Fast_1 + t.Fast_2 + t.Fast_3;
+	ta = j.Fast1 + j.Fast2 + j.Fast3;
+	if (ka / 3 < ta / 3) {
+		cout << "Победитель: " << j.name_tatra << " c средней скоростью=" << ta / 3 << " км/ч" << endl;
+		cout << "результат: ";
+		return -1;
+	}
+	else if (ka / 3 > ta / 3) {
+		cout << "Побелитель: " << t.name_kamaz << " c средней скоростью=" << ka / 3 << " км/ч" << endl;
+		cout << "результат: ";
+		return +1;
+	}
+	else {
+		cout << "Скорости " << t.name_kamaz << " и " << j.name_tatra << " равны: ";
+		cout << ka / 3 << "==" << ta / 3 << endl;
+		cout << "результат: ";
+		return 0;
+	}
+}
+int main() {
+	setlocale(LC_ALL, "rus");
+	int b, l;
+	kamaz K;
+	tatra T;
+	int p = 0;
+	while (true) {
+		system("cls");
+		cout << "1 - ввести данные" << endl;
+		cout << "2 - вывод данных" << endl;
+		cout << "3 - победитель" << endl;
+		cout << "0 - выход" << endl;
+		cout << "Ответ пользователя: ";
+		int chouse;
+		while (!(cin >> chouse)) {
+			cout << "Вы можете вводить только целочисленное значение. Повторите ввод :\n";
+			cin.clear();
+			while (cin.get() != '\n');
+		}
+		switch (chouse)
+		{
+		case 1: cout << "Введите данные о камазе" << endl;
+			K.set();
+			cout << endl;
+			cout << "Введите данные о татре" << endl;
+			T.set(); _getch();  break;
+		case 2: cout << setiosflags(ios::left) << setw(18) << "Название" << setiosflags(ios::left)
+			<< setw(18) << "По равнинам" << setiosflags(ios::left) << setw(18) << "По пустыням" <<
+			setiosflags(ios::left) << setw(18) << "По горам" << setw(18) << "Средняя скорость" << "\n\n";
+			K.output();
+			T.output2(); _getch();  break;
+		case 3: cout << FrCreater(K, T);
+			cout << endl; _getch();  break;
+		case 0: exit(1); _getch();  break;
+		default: cout << "\n\n некорректный ввод. используйте цифры 1 - 4 для управления и 0 для выхода\n"; _getch(); break;
+		}
+	}
+
+	return 0;
+}

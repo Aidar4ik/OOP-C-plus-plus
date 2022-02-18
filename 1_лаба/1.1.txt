@@ -1,0 +1,171 @@
+#include <iostream>
+#include <conio.h>
+#include <vector>
+#include <iomanip>
+#include <string>
+#include <Windows.h>
+using namespace std;
+
+class Aeroflot {
+private:
+	//поля класса
+	int flight_numb;       //номер рейса
+	string punkt_otprav; //пункт отправления
+	char punkt_nazn[30];   //пункт назначения
+	float arr_time;        //время прибытия
+	float dep_time;        //время отправления
+	string regis_place;  //место регистрации
+
+public:
+	//методы класса
+	void vvod(Aeroflot& inp,vector<Aeroflot>& samolet) {              //ВВОД ИНФОРМАЦИИ О РЕЙСЕ
+		cout << "введите номер рейса: ";                                                    //
+		while (!(cin >> inp.flight_numb)) {                                                     //
+			cout << "Вы можете вводить только целочисленное значение. Повторите ввод :\n";  // ПРОВЕРКА НА ВВОД
+			cin.clear();                                                                    //
+			while (cin.get() != '\n');                                                      //
+		}
+		cout << "введите пункт отправления: ";
+		while (!(cin >> inp.punkt_otprav)) {
+			cout << "Вы можете вводить только символьное значение. Повторите ввод :\n";
+			cin.clear();
+			while (cin.get() != '\n');
+		}
+		cout << "введите пункт назначения: ";
+		while (!(cin >> inp.punkt_nazn)) {
+			cout << "Вы можете вводить только символьное значение. Повторите ввод :\n";
+			cin.clear();
+			while (cin.get() != '\n');
+		}
+		cout << "введите время прибытия: ";
+		while (!(cin >> inp.arr_time)) {
+			cout << "Вы можете вводить только вещественное значение. Повторите ввод :\n";
+			cin.clear();
+			while (cin.get() != '\n');
+		}
+		cout << "введите время отправления: ";
+		while (!(cin >> inp.dep_time)) {
+			cout << "Вы можете вводить только вещественное значение. Повторите ввод :\n";
+			cin.clear();
+			while (cin.get() != '\n');
+		}
+		cout << "введите место регистрации: ";
+		while (!(cin >> inp.regis_place)) {
+			cout << "Вы можете вводить только символьное значение. Повторите ввод :\n";
+			cin.clear();
+			while (cin.get() != '\n');
+		}
+		samolet.push_back(inp);                     //СОХРАНЯЕМ ВСЮ ИНФОРМАЦИЮ В МАССИВ "samolet" С ПОМОЩЬЮ МЕТОДА push_back
+	}
+	void vyvod(Aeroflot inp, vector<Aeroflot>& samolet) {      // ВЫВОДИМ ВСЕ РЕЙСЫ НА КОНСОЛЬ
+		cout << "Пункт отправления: \t" << setw(13);
+		for (int i = 0; i < samolet.size(); i++) {
+			cout << samolet[i].punkt_otprav << setw(13);
+		}
+		cout << endl;
+		cout << "Пункт назначения: \t" << setw(13);
+		for (int i = 0; i < samolet.size(); i++) {
+			cout << samolet[i].punkt_nazn << setw(13);
+		}
+		cout << endl;
+		cout << "Время отправления: \t" << setw(13);
+		for (int i = 0; i < samolet.size(); i++) {
+			cout << samolet[i].arr_time << setw(13);
+		}
+		cout << endl;
+		cout << "Время прибытия: \t" << setw(13);
+		for (int i = 0; i < samolet.size(); i++) {
+			cout << samolet[i].dep_time << setw(13);
+
+		}
+		cout << endl;
+		cout << "Место регистрации: \t" << setw(13);
+		for (int i = 0; i < samolet.size(); i++) {
+			cout << samolet[i].regis_place << setw(13);
+		}
+		cout << endl;
+	}
+	void sort_PunktNazn(vector<Aeroflot> samolet) {                           // СОРТИРУЕМ РЕЙСЫ ПО ПУНКТУ НАЗНАЧЕНИЯ
+	
+		for (int i = 0; i < samolet.size() - 1; i++) {                         //
+			for (int j = i + 1; j < samolet.size(); j++) {                     //
+				if (strcmp(samolet[i].punkt_nazn,samolet[j].punkt_nazn)>0) {   // С ПОМОЩЬЮ МЕТОДА strcmp СРАВНИВАЕМ ПУНКТЫ НАЗНАЧЕНИЯ
+					Aeroflot temp = samolet[i];                                // ДВУХ РЕЙСОВ И МЕНЯЕМ РЕЙСЫ МЕСТАМИ ЕСЛИ ЭТО НЕОБХОДИМО
+					samolet[i] = samolet[j];                                   //
+					samolet[j] = temp;                                         //
+				}
+			}
+		}
+		cout << "Сортировка выполнена." << endl;                      // ВЫВОД ОТСОРТИРОВАННОГО МАССИВА НА КОНСОЛЬ ЭКРАНА
+		cout << setw(16) << "Номер рейса" << setw(16) << "Отправление" << setw(16) << "Назначение" << setw(16) << "Время отправ" << setw(16) << "Время прибытия" << setw(16) << "Регистрация" << endl;
+		for (int i = 0; i < samolet.size(); i++) {
+			cout << setiosflags(ios::left) << setw(16) << samolet[i].flight_numb;
+			cout << setiosflags(ios::left) << setw(16) << samolet[i].punkt_otprav;
+			cout << setiosflags(ios::left) << setw(16) << samolet[i].punkt_nazn;
+			cout << setiosflags(ios::left) << setw(16) << samolet[i].arr_time;
+			cout << setiosflags(ios::left) << setw(16) << samolet[i].dep_time;
+			cout << setiosflags(ios::left) << setw(16) << samolet[i].regis_place << endl;
+		}
+	}
+
+	void poisk(vector<Aeroflot>& samolet) {              //ПОИСК И ВЫВОД ПОЛНОЙ ИНФОРМАЦИИ ГОРОДОВ, КУДА ИМЕЮТСЯ РЕЙСЫ
+		int count = 0;
+		cout << "Введите пункт назначения: ";
+		string name;
+		cin >> name;
+		cout << setw(16) << "Номер рейса" << setw(16) << "Отправление" << setw(16) << "Назначение" << setw(16) << "Время отправ" << setw(16) << "Время прибытия" << setw(16) << "Регистрация" << endl;
+		for (int i = 0; i < samolet.size(); i++) {
+			if (samolet[i].punkt_nazn == name) {
+				cout << setiosflags(ios::left) << setw(16) << samolet[i].flight_numb;
+				cout << setiosflags(ios::left) << setw(16) << samolet[i].punkt_otprav;
+				cout << setiosflags(ios::left) << setw(16) << samolet[i].punkt_nazn;
+				cout << setiosflags(ios::left) << setw(16) << samolet[i].arr_time;
+				cout << setiosflags(ios::left) << setw(16) << samolet[i].dep_time;
+				cout << setiosflags(ios::left) << setw(16) << samolet[i].regis_place << endl;
+				count++;
+			}
+		}
+		if (count == 0) {
+			cout << "Не найдено совпадений\n";
+		}
+	}
+};
+
+
+void menu() {                                             //ГЛАВНАЯ МЕНЮШКА, УПРАВЛЯЕТ ПОСЛЕДОВАТЕЛЬНОСТЬЮ ВЫЗОВА ВСЕХ МЕТОДОВ КЛАССА
+	vector<Aeroflot> samolet;
+	Aeroflot s;
+	while (true) {
+		system("cls");
+		cout << "1 - ввести данные" << endl;
+		cout << "2 - вывод данных" << endl;
+		cout << "3 - сортировка по пункту назначения" << endl;
+		cout << "4 - поиск данных по вылетам" << endl;
+		cout << "0 - выход" << endl;
+		cout << "Ответ пользователя: ";
+		int chouse;
+		while (!(cin >> chouse)) {
+			cout << "Вы можете вводить только целочисленное значение. Повторите ввод :\n";
+			cin.clear();
+			while (cin.get() != '\n');
+		}
+		switch (chouse)
+		{
+		case 1: s.vvod(s, samolet); _getch();  break;
+		case 2: s.vyvod(s, samolet); _getch(); break;
+		case 3: s.sort_PunktNazn(samolet); _getch();  break;
+		case 4: s.poisk(samolet); _getch();  break;
+
+		case 0: exit(1);
+		default: cout << "\n\n некорректный ввод. используйте цифры 1 - 4 для управления и 0 для выхода\n"; _getch(); break;
+		}
+	}
+
+}
+int main() {                         //ГЛАВНАЯ ФУНКЦИЯ MAIN, КОТОРАЯ МЕНЯ ЯЗЫК НА КИРИЛЛИЦУ И ВЫЗЫВАЕТ МЕНЮ
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+	setlocale(LC_ALL, "RUS");
+	menu();
+}
+

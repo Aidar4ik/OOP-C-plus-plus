@@ -1,0 +1,147 @@
+#include<iostream>
+using namespace std;
+const double pi = 3.1415;
+class Figure { //Базовый абстрактный класс
+protected:
+	double length;
+	double width;
+	virtual double perimetr() = 0; //чисто виртуальный метод
+	virtual double area() = 0; //чисто виртуальный метод
+};
+class Rectangle :private Figure {
+public:
+	double perimetr() {//переопределение метода
+		double perim = (length + width) * 2;
+		cout << "Периметр прямоугольника: " << perim << endl;
+		return perim;
+	}
+	double area() {//переопределение метода
+		double area = length * width;
+		cout << "Площадь прямоугольника: " << area << endl;
+		return area;
+	}
+	void set(double length, double width) {
+		this->width = width;
+		this->length = length;
+	}
+	void get() {
+		cout << "Длина: " << length << endl;
+		cout << "Ширина: " << width << endl;
+	}
+};
+class Circle :private Figure {
+	double radius;
+public:
+	void set(double radius, double length) {
+		this->radius = radius;
+		this->length = length;
+	}
+	double perimetr() {//переопределение метода
+		length = 2 * pi * radius;
+		cout << "Периметр круга: " << length << endl;
+		return length;
+	}
+	double area() {//переопределение метода
+		double area = pi * pow(radius, 2);
+		cout << "Площадь круга: " << area << endl;
+		return area;
+	}
+};
+class Trapezium :private Figure {
+	double a;
+	double b;
+	double c;
+	double d;
+public:
+	void set(double a, double b, double c, double d, double length) {
+		this->a = a;
+		this->b = b;
+		this->c = c;
+		this->d = d;
+		this->length = length;
+	}
+	double area() {//переопределение метода
+		double area;
+		area = (a + b) / 2 * length;
+		cout << "Площадь трапеции: " << area << endl;
+		return area;
+	}
+	double perimetr() {//переопределение метода
+		double perm = a + b + c + d;
+		cout << "Периметр прямоугольника: " << perm << endl;
+		return perm;
+	}
+};
+int main() {
+	setlocale(LC_ALL, "rus");
+	int choose;
+	while (true) {
+		cout << "Выберите фигуру:\n1 - Прямоугольник\n2 - Круг\n3 - Трапеция\n0 - Выход\n";
+		cout << "Выбор пользователя: ";
+		cin >> choose;
+		if (choose == 1) {
+			Rectangle rect;
+			double length_rect, width_rect;
+			cout << "Введите длину прямоугольника: ";
+			cin >> length_rect;
+			cout << "Введите ширину прямоугольника: ";
+			cin >> width_rect;
+			if (length_rect <= 0 || width_rect <= 0 || cin.fail()) {
+				cout << "\nНекорректный ввод\n";
+				cin.clear();
+			}
+			else {
+				rect.set(length_rect, width_rect);
+				rect.perimetr();
+				rect.area();
+			}
+		}
+		else if (choose == 2) {
+			Circle circle;
+			double radius_circle, length_circle;
+			cout << "Введите радиус круга: ";
+			cin >> radius_circle;
+			cout << "Введите длину круга: ";
+			cin >> length_circle;
+			if (radius_circle <= 0 || length_circle <= 0) {
+				cout << "Некорректный ввод\n";
+				cin.clear();
+			}
+			else {
+				circle.set(radius_circle, length_circle);
+				circle.perimetr();
+				circle.area();
+			}
+		}
+		else if (choose == 3) {
+			Trapezium trap;
+			double a, b, c, d, length;
+			cout << "Введите сторону а: ";
+			cin >> a;
+			cout << "Введите сторону b: ";
+			cin >> b;
+			cout << "Введите сторону c: ";
+			cin >> c;
+			cout << "Введите сторону d: ";
+			cin >> d;
+			cout << "Введите длину трапеции:";
+			cin >> length;
+			if (a <= 0 || b <= 0 || c <= 0 || d <= 0 || length <= 0) {
+				cout << "Некорректный ввод\n";
+				cin.clear();
+			}
+			else {
+				trap.set(a, b, c, d, length);
+				trap.perimetr();
+				trap.area();
+			}
+		}
+		else if (choose == 0) {
+			exit(0);
+		}
+		else cout << "Ошибка\n";
+		system("pause>null");
+		system("cls");
+	}
+	return 0;
+}

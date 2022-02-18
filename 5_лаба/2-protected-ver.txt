@@ -1,0 +1,199 @@
+#include<iostream>
+#include<Windows.h>
+#include<iomanip>
+using namespace std;
+class Display {
+	string type;
+	long colors;
+	int x_resolution;
+	int y_resolution;
+protected:
+	void print_display() {
+		cout << type<<setw(20) << colors<<setw(20) << x_resolution<<setw(25) << y_resolution<<setw(20);
+	}
+	void set_display(string type, long colors, int x_resolutions, int y_resolutions) {
+		this->type = type;
+		this->colors = colors;
+		this->x_resolution = x_resolutions;
+		this->y_resolution = y_resolutions;
+	}
+	void print_to_console() {
+		cout << type<<" " << colors<<" " << x_resolution<<" " << y_resolution;
+	}
+	void set_error() {
+		cout << "Некорректный ввод\n";
+	}
+public:
+	Display() {
+
+	}
+	Display(char type, long colors, int x_resolutions, int y_resolutions) {
+		this->type = type;
+		this->colors = colors;
+		this->x_resolution = x_resolutions;
+		this->y_resolution = y_resolutions;
+		/*cout << "______________________________________________________________________________________________________________________________\n";
+		cout << "Вызвался конструктор родительского класса Display\n";
+		cout << "______________________________________________________________________________________________________________________________\n";*/
+
+	}
+	~Display() {
+		cout << "Вызвался деструктор родительского класса Display\n";
+	}
+	
+};
+
+
+class MotherBoard {
+private:
+	int processor;
+	int speed;
+	int RAM;
+protected:
+	void print_motherboard() {
+		cout << processor<<setw(18) << speed<<setw(23) << RAM<<setw(18);
+	}
+	void set_motherboard(int processor, int speed, int RAM) {
+		this->processor = processor;
+		this->speed = speed;
+		this->RAM = RAM;
+	}
+	void print_to_console1() {
+		cout << processor<<" " << speed<<" " << RAM;
+	}
+	MotherBoard() {
+
+	}
+	MotherBoard(int processor, int speed, int RAM) {
+		this->processor = processor;
+		this->speed = speed;
+		this->RAM = RAM;
+		/*cout << "______________________________________________________________________________________________________________________________\n";
+		cout << "Вызвался конструктор родительского класса MotherBoard\n";
+		cout << "______________________________________________________________________________________________________________________________\n";*/
+
+	}
+	~MotherBoard() {
+		cout << "Вызвался деструктор родительского класса MotherBoard\n";
+	}
+};
+
+
+class Computer:protected Display,protected MotherBoard {
+	string marka;
+	int hard_disk;
+public:
+	Computer():Display(),MotherBoard() {
+
+	}
+	Computer(string marka,int hard_disk):Display('q',1, 2, 3),
+		MotherBoard(1,21,13){
+		this->hard_disk=hard_disk;
+		this->marka = marka;
+		/*cout << "______________________________________________________________________________________________________________________________\n";
+		cout << "Вызвался конструктор производного класса Computer\n";
+		cout << "______________________________________________________________________________________________________________________________\n";*/
+
+	}
+	~Computer() {
+		cout << "Вызвался деструктор производного класса Computer\n";
+	}
+	void set_to_Display(string type, long colors, int x_resolutions, int y_resolutions) {
+		set_display(type,colors,x_resolutions,y_resolutions);
+	}
+	void print_to_Display() {
+		print_display();
+	}
+	void  show() {
+		cout << marka << setw(12) <<hard_disk  << endl;
+	}
+	void set_computer(string marka, int hard_disk) {
+		this->hard_disk = hard_disk;
+		this->marka = marka;
+	}
+	void set_to_MotherBoard(int processor, int speed, int RAM) {
+		set_motherboard( processor, speed,  RAM);
+	}
+	void print_to_MotherBoard() {
+		print_motherboard();
+	}
+	void print_to_console_prod() {
+		print_to_console();
+	}
+	void print_to_console_prod1() {
+		print_to_console1();
+	}
+	void call_error() {
+		set_error();
+	}
+//	MotherBoard::print_motherboard;
+//	MotherBoard::set_motherboard;
+	//Display::print_display;
+//	Display::set_display;
+};
+void print_main() {
+	cout << "Тип монитора"<<setw(20)<<"Количество цветов"<<setw(25)<<"Разрешение по оси x"<<setw(25)<<"Разрешение по оси y"<<
+		setw(15)<<"Тип процессора"<<setw(20)<<"Скорость процессора"<<setw(15)<<"Объем RAM"<<setw(15)
+		<< "Название" << setw(15) << "Объем HDD\n";
+}
+int main() {
+	setlocale(LC_ALL, "rus");
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+	string type;
+	long colors;
+	int x_resolutions, y_resolutions;
+	//Переменные для Display
+	int processor,RAM,speedRAM;
+	//Переменные для MotherBoard
+	int  hard_disk;
+	string marka;
+	//Переменные для Computer
+
+	cout << "Введите марку компьютера:";
+	cin >> marka;
+	cout << "Введите объем жесткого диска:";
+	cin >> hard_disk;
+	cout << "Тип процессора:";
+	cin >> processor;
+	cout << "Скорость процессора:";
+	cin >> speedRAM;
+	cout << "Введите объем оперативной памяти:";
+	cin >> RAM;
+	Computer computer(marka, hard_disk);
+	computer.set_computer(marka, hard_disk);
+	computer.set_to_MotherBoard(processor, speedRAM, RAM);
+	//computer.set_motherboard(processor, speedRAM, RAM);
+
+
+	cout << "Введите тип монитора:";
+	cin >> type;
+	cout << "Введите количество цветов:";
+	cin >> colors;
+	cout << "ВВедите разрешение по позиции x:";
+	cin >> x_resolutions;
+	cout << "Введите разрешение по позиции y:";
+	cin >> y_resolutions;
+
+	print_main();
+
+	computer.set_to_Display(type, colors, x_resolutions, y_resolutions);
+//	computer.set_display(type,colors,x_resolutions,y_resolutions);
+	//computer.print_display();
+	computer.print_to_Display();
+	computer.print_to_MotherBoard();
+	//computer.print_motherboard();
+	
+	computer.show();
+	cout << "______________________________________________________________________________________________________________________________________________________________________\n";
+	cout << "Свойства родительского класса Display:";
+	computer.print_to_console_prod();
+	cout << "\n______________________________________________________________________________________________________________________________________________________________________\n"; 
+	cout << "Свойства родительского класса MotherBoard:";
+	computer.print_to_console_prod1();
+	cout << "\n______________________________________________________________________________________________________________________________________________________________________\n";
+	cout << "Свойства производного класса Computer:";
+	computer.show();
+	system("pause>null");
+	return 0;
+}

@@ -1,0 +1,41 @@
+#include <iostream>
+using namespace std;
+
+double power(double n, int p);
+int main() {
+	setlocale(LC_ALL, "rus");
+	int p = 2;
+	double n;
+	int a;
+	cout << "введите число: ";
+	cin >> n;
+	cout << "хотите ввести степень? \n 1 - да \n 2 - нет"<<endl;
+	cout << "ответ пользователя: ";
+	cin >> a;
+	if (a == 1) {
+		cout << "степень должен быть\n 1) =2 \n 2) >2"<<endl;
+		cout << "ответ пользователя: ";
+		cin >> p;
+			if (p == 2) {
+				cout << "результат = " << power(n,p) << endl;
+			}
+			else if (p > 2) {
+				cout << "результат = " << power(n,p) << endl;
+			}
+			else {
+				cout << "Ошибка" << endl;
+			}
+	}
+	else {
+		cout << "результат = " << power(n, p) << endl;
+
+	}
+}
+
+double power(double n, int p = 2) {
+	double nn = 1;
+	for (int i = 1; i <= p; i++) {
+		nn = nn * n;
+	}
+	return nn;
+}

@@ -1,0 +1,136 @@
+#include<iostream>
+#include<iomanip>
+#include<Windows.h>
+using namespace std;
+class Employee {
+	string name;
+	string position;
+	double salary;
+protected:
+	Employee() {//Конструктор без аргументов
+		name = "";
+		salary = 0;
+		position = "";
+	}
+	Employee(string Name, string simv, double value) {//Конструктор с аргументами
+		this->name = Name;
+		this->position = simv;
+		this->salary = value;
+	}
+	~Employee() {
+		cout << "Данные очищены у родительского класса\n";
+	}
+	void set(string name, string position, double value) {//Сеттер для вставки значения в закрытые свойства класса
+		this->name = name;
+		this->position = position;
+		this->salary = value;
+	}
+	void salary_year(double bonus) {//Подсчет зп с учетом бонуса
+		cout << setw(20) << (salary * 12) + bonus << endl;
+	}
+	void print_rod_class() {//Вывод родительского класса
+		cout << this->name << setw(15) << this->position << setw(15) << this->salary << setw(15);
+	}
+	void print() {//Вывод
+		cout << "Имя" << setw(18) << "Должность" << setw(15) << "Зарплата" << setw(20);
+	}
+
+};
+class Manager :protected Employee {//класс Мененджер наследует защищенный класс Работник
+	double annual_bonus;
+	string company_car;
+	int stock_options;
+public:
+	Manager() :Employee() { annual_bonus = 0; company_car = ""; stock_options = 0; }//Конструктор по умолчанию
+	Manager(double annual_bonus_value, string value_company_car, int value_stock_options) :Employee("q", "f", 5) {//Конструктор с аргументами
+		this->annual_bonus = annual_bonus_value;
+		this->company_car = value_company_car;
+		this->stock_options = value_stock_options;
+	}
+	~Manager() {//Деструктор
+		cout << "Данные очищены у производного класса\n";
+	}
+	void set1(double annual_bonus, string company_car, int stock_position) {//Сеттер для вставки значения в свойства класса
+		this->annual_bonus = annual_bonus;
+		this->company_car = company_car;
+		this->stock_options = stock_position;
+	}
+	void print_prod() {//Вывод дочернего класса
+		cout << "Машина компании" << setw(20) << "Ежегодный бонус" << setw(20) << "Опционы на акции" << setw(23) << "Зарплата за год\n";
+	}
+	void print1() {//Вывод
+		cout << this->company_car << setw(18) << this->annual_bonus << setw(20) << this->stock_options << setw(18);
+	}
+	Employee::set;
+	Employee::print;
+	Employee::print_rod_class;
+	Employee::salary_year;
+
+	/*Employee::name;
+	Employee::position;
+	Employee::salary;*/
+};
+int main() {
+	setlocale(LC_ALL, "rus");
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+	string position, company_car, name;
+	double salary, annual_bonus;
+	int stock_options;
+	cout << "Введите имя:";
+	cin >> name;
+
+	cout << "Должность:";
+	cin >> position;
+
+	cout << "Заработная плата:";
+	cin >> salary;
+
+	cout << "Введите ежегодный бонус:";
+	cin >> annual_bonus;
+
+	cout << "Машина компании:";
+	cin >> company_car;
+
+	cout << "Опционы на акции:";
+	cin >> stock_options;
+
+	Manager m(annual_bonus, company_car, stock_options);
+	cout << "__________________________________________\n";
+	cout << setw(70) << "Родительский класс:\n";
+	m.set(name, position, salary);
+	cout << "Свойства родительского класса:";
+	m.print_rod_class();
+	cout << endl;
+	cout << "Метод подсчета зарплаты за год родительского класса:";
+	m.salary_year(annual_bonus);
+
+	cout << endl;
+	cout << "Метод вывода данных родительского класса:";
+	m.print();
+	cout << endl;
+	cout << "__________________________________________\n";
+	cout << setw(70) << "Производный класс:\n";
+	m.set1(annual_bonus, company_car, stock_options);
+	cout << endl;
+	cout << "Свойства производного класса:";
+	m.print1();
+	cout << endl;
+	cout << "Метод вывода данных родительского класса:";
+
+
+	m.print_prod();
+	cout << endl;
+	cout << "__________________________________________\n";
+	cout << setw(70) << "Все вместе:\n";
+	m.set(name, position, salary);
+	m.set1(annual_bonus, company_car, stock_options);
+	m.print();
+	m.print_prod();
+	m.print_rod_class();
+	m.print1();
+	m.salary_year(annual_bonus);
+
+	system("pause>null");
+	return 0;
+}

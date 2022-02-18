@@ -1,0 +1,71 @@
+#include<iostream>
+using namespace std;
+//поиск макс элемента
+template <class T> 
+void MaxElem(T* arr, int size) {
+	T max = arr[0];
+
+	cout << "Наш массив: ";
+	for (int i = 0; i < size; i++) {
+		cout << arr[i] << " ";
+	}
+	cout << endl;
+
+
+	for (int i = 0; i < size; i++) {
+		if (arr[i] > max) {
+			max = arr[i];
+		}
+	}
+
+	cout << "Максимальный элемент: "<< max << endl;
+}
+
+template <class T>
+void BubbleSort(T* arr, int size) {
+	
+	//сортировка элементов
+	for (int i = 0; i < size - 1; ++i)
+		for (int j = 0; j < size - 1; ++j)
+			if (arr[j + 1] < arr[j]) {
+				T temp(arr[j]); //временная переменная должна быть того же типа, что и параметры
+				arr[j] = arr[j + 1];
+				arr[j + 1] = temp;
+			}
+	cout << "Отсортированный массив: ";
+	for (int i = 0; i < size; i++) {
+		cout << arr[i] << " ";
+	}
+	cout << endl;
+
+}
+
+int main() {
+	setlocale(LC_ALL, "RUS");
+	const int size = 5;
+	int arr1[size] = { 10, 5, 7, 3, 4};
+	double arr2[size] = { 7.7682, 2.234,  4.67876, 1.2345, 5.346 };
+	char arr3[size] = { 'f', 'a', 'c', 'h', 'z' };
+	float arr4[size] = { 7.62 , 5.56 , 38.0 , 56.0 , 9.0 };
+
+
+	//вызов шаблона функции
+
+	//вызов функции с аргументами типа int
+	MaxElem(arr1, size); 
+	BubbleSort(arr1, size); 
+	cout << endl;
+	//вызов функции с аргументами типа double
+	MaxElem(arr2, size); 
+	BubbleSort(arr2, size);
+	cout << endl;
+	//вызов функции с аргументами типа char
+	MaxElem(arr3, size); 
+	BubbleSort(arr3, size); 
+	cout << endl;
+	//вызов функции с аргументами типа float
+	MaxElem(arr4, size);
+	BubbleSort(arr4, size);
+	cout << endl;
+	return 0;
+}

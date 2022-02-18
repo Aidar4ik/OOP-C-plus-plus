@@ -1,0 +1,136 @@
+#include <iostream>
+#include <conio.h>
+#include <vector>
+#include <iomanip>
+#include <string>
+#include <Windows.h>
+using namespace std;
+
+
+class Nomenclature {
+private:
+	//поля класса
+	string name;
+	int o_price;
+	int r_price;
+	int kolTovar;
+
+public:
+	//методы класса
+	Nomenclature() {
+		name = "";
+		o_price = 0;
+		r_price = 0;
+		kolTovar = 0;
+	}
+	~Nomenclature() {
+		//cout << "Данные удалены" << endl;
+	}
+
+	void set(string n, int o, int r, int k) {
+		name = n;
+		o_price = o;
+		r_price = r;
+		kolTovar = k;
+	}
+	void get() {
+		cout << setiosflags(ios::left) << setw(16) << name;
+		cout << setiosflags(ios::left) << setw(16) << o_price;
+		cout << setiosflags(ios::left) << setw(16) << r_price;
+		cout << setiosflags(ios::left) << setw(16) << kolTovar;
+		cout << setiosflags(ios::left) << count() << endl;
+	}
+	int count() {
+		return (r_price - o_price) * kolTovar;
+	}
+	void del(vector<Nomenclature>& tovar, string a) {
+		int index;
+		int col = 0;
+		for (int i = 0; i < tovar.size(); i++) {
+			if (a == tovar[i].name) {
+				index = i;
+				col++;
+			}
+		}
+		if (col == 0) { cout << "Данные не найдены" << endl; }
+		else {
+			cout << "Товар удалён" << endl;
+			tovar.erase(tovar.begin() + index);
+			tovar.swap(tovar);
+		}
+	}
+	
+};
+
+void menu() {                                             //ГЛАВНАЯ МЕНЮШКА, УПРАВЛЯЕТ ПОСЛЕДОВАТЕЛЬНОСТЬЮ ВЫЗОВА ВСЕХ МЕТОДОВ КЛАССА
+	vector<Nomenclature>tovar;
+	Nomenclature t;
+	int o_price, r_price, kolTovar;
+	string name;
+	string temp;
+	int summary = 0;
+	while (true) {
+		system("cls");
+		cout << "1 - добавить" << endl;
+		cout << "2 - вывод и подсчёт" << endl;
+		cout << "3 - общий вывод чистого дохода" << endl;
+		cout << "4 - удалить товар" << endl;
+
+		cout << "0 - выход" << endl;
+		cout << "Ответ пользователя: ";
+		int chouse;
+		while (!(cin >> chouse)) {
+			cout << "Вы можете вводить только целочисленное значение. Повторите ввод :\n";
+			cin.clear();
+			while (cin.get() != '\n');
+		}
+		switch (chouse)
+		{
+		case 1:
+			cout << "название товара: "; cin >> name;
+			cout << "оптовая цена: "; cin >> o_price;
+			cout << "розничная цена: "; cin >> r_price;
+			cout << "количество товаров на складе: "; cin >> kolTovar;
+
+			t.set(name, o_price, r_price, kolTovar);
+			tovar.push_back(t); _getch();  break;
+
+		case 2:
+			cout << setw(16) << "товар" << setw(16) << "оптовая цена" << setw(16) << "розничная цена" << setw(16) << "кол-во товара" << setw(16) << "чистый доход" << endl;
+			for (int i = 0; i < tovar.size(); i++) {
+				tovar[i].get();
+
+			}
+			summary = 0;
+			for (int i = 0; i < tovar.size(); i++) {
+				summary += tovar[i].count();
+			}
+			cout << endl;
+			cout << "Чистый доход всех товаров: " << summary << endl;
+			_getch();  break;
+		case 3:
+			summary = 0;
+			for (int i = 0; i < tovar.size(); i++) {
+				summary += tovar[i].count();
+			}
+			cout << "Чистый доход всех товаров: " << summary << endl;
+			_getch();  break;
+
+		case 4:
+			cout << "Введите название продукта для удаления:";
+			cin >> temp;
+			t.del(tovar, temp);
+			_getch();  break;
+		case 0: exit(1);
+		default: cout << "\n\n некорректный ввод. используйте цифры 1 - 4 для управления и 0 для выхода\n"; _getch(); break;
+		}
+	}
+
+}
+int main() {                         //ГЛАВНАЯ ФУНКЦИЯ MAIN, КОТОРАЯ МЕНЯ ЯЗЫК НА КИРИЛЛИЦУ И ВЫЗЫВАЕТ МЕНЮ
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+	setlocale(LC_ALL, "RUS");
+	menu();
+}
+

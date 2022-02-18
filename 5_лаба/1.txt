@@ -1,0 +1,81 @@
+#include<iostream>
+using namespace std;
+
+//родительский класс работник(Employee)
+class Employee {  
+	//поля класса
+	string name;    
+	string position;
+	int salary;
+//методы класса
+public:            
+	Employee() :name(""), position(""), salary(0) {} //конструктор по умолчанию
+	Employee(string addname, string addposition, int addsalary) : name(addname), position(addposition), salary(addsalary) {} //конструктор с аргументами
+	~Employee() { cout << "Данные у базоаого класса очищены\n"; }  //деструктор
+
+	int SalaryYear() {    //расчет заработной платы за год
+		return salary * 12;
+	}
+	void output() {       //размещение информации о классе-родителе на консоли
+		cout << "Имя работника: " << name << "\n" << "Занимаемая должность: " << position << "\n" << "Зарплата: " << salary << "\n" << "Зарплата за год: " << SalaryYear() << "\n";
+	}
+};
+//класс - потомок менеджер (Manager).
+//механизм наследования public
+class Manager : public Employee {
+	//поля класса
+	int annual_bonus;
+	string company_car;
+	int stock_option;
+//методы класса
+public:
+	Manager() :Employee() { annual_bonus = 0; company_car = ""; stock_option = 0; } //конструктор по умолчанию
+
+	//конструктор с аргументами
+	Manager(int addannual, string addcompany, int addstock, string addname, string addposition, int addsalary) : Employee(addname, addposition, addsalary) {
+		this->annual_bonus = addannual;
+		this->company_car = addcompany;
+		this->stock_option = addstock;
+	}
+	~Manager() { cout << "Данные у производного класса очищены\n"; } //деструктор
+
+	void output2() {  //размещение информации о классе-потомке на консоли. 
+		cout << "Ежегодный бонус: " << annual_bonus << "\n" << "Машина компании: " << company_car << "\n" << "Опционы на акции: " << stock_option << "\n";
+	}
+
+};
+
+
+int main() {
+	setlocale(LC_ALL, "RUS");
+	string name, position, company_car;
+	int salary, annual_bonus, stock_options;
+
+	cout << "Имя: "; cin >> name;
+	cout << "Должность: "; cin >> position;
+	cout << "Зарплата: "; cin >> salary;
+	cout << "Ежегодный бонус: "; cin >> annual_bonus;
+	cout << "Машина компании: "; cin >> company_car;
+	cout << "Опционы на акции: "; cin >> stock_options;
+	cout << endl;
+
+	Manager rab(annual_bonus, company_car, stock_options, name, position, salary);    // Создаём объект работник
+	cout << "Базовый класс Employee" << endl;
+	cout << "++++++++++++++++++++++++++++++++++++++" << endl;
+	rab.output();
+	cout << "++++++++++++++++++++++++++++++++++++++" << endl << endl;
+
+	cout << "Производный класс Manager (свои свойства)" << endl;
+	cout << "++++++++++++++++++++++++++++++++++++++" << endl;
+	rab.output2();
+	cout << "++++++++++++++++++++++++++++++++++++++" << endl << endl;
+
+	cout << "Производный класс Manager (с свойствами базового класса)" << endl;
+	cout << "++++++++++++++++++++++++++++++++++++++" << endl;
+
+	rab.output();
+	rab.output2();
+	cout << "++++++++++++++++++++++++++++++++++++++" << endl << endl;
+	system("pause");
+	return 0;
+}

@@ -1,0 +1,127 @@
+#include<iostream>
+#include<vector>
+#include<list>
+using namespace std;
+const int SIZE = 5;  //константный размер массива 5
+
+class Array {   // базовый класс Array
+	unsigned array[SIZE]; // массив
+	int kol; 
+public:
+	Array() {  //конструктор по умолчанию
+		for (int i = 0; i < SIZE; i++) {
+			array[i] = 0;
+		}
+		kol = 0;
+	}
+	virtual void set() { // виртуальный метод set, используется для инициализации
+		cout << "Введите значение для массива: ";
+		for (int i = 0; i < SIZE; i++) {
+			cin >> array[i];
+		}
+	}
+	virtual void get() { // виртуальный метод get, используется для вывода данных на консоль
+		cout << "Массив: ";
+		for (int i = 0; i < SIZE; i++) {
+			cout << array[i] << " ";
+		}
+	}
+	virtual void sum() { // виртуальный метод sum, используется для вычисления суммы 
+		int sum = 0;
+		for (int i = 0; i < SIZE; i++) {
+			sum += array[i];
+		}
+		cout << "\nСумма массива: " << sum << endl;
+	}
+	
+};
+
+class Vector :protected Array { //производный класс Vector, механизм наследования protected
+	vector<double>vect;  //объявление вектора
+public:
+	void set() { //переопределение метода set
+		cout << "Введите значение для вектора: ";
+		double a;
+		int i = 0;
+		while (i < SIZE) {
+			cin >> a;
+			vect.push_back(a);
+			i++;
+		}
+	}
+	void get() { //переопределение метода get
+		cout << "Вектор: ";
+		for (int i = 0; i < SIZE; i++) cout << vect[i] << " ";
+	}
+	void sum() { //переопределение метода  sum
+		double sum = 0;
+		for (int i = 0; i < SIZE; i++) {
+			sum += vect[i];
+		}
+		cout << "\nСумма вектора: " << sum << endl;
+
+	}
+};
+class List :protected Array { //производный класс List, механизм наследования protected
+	list<float>spisok; //объявление списка
+public:
+	List() {  //конструктор по умолчанию
+		for (auto i = spisok.begin(); i != spisok.end(); i++) {
+			*i = 0;
+		}
+	}
+	void set() { //переопределение метода set
+		cout << "Введите значение для списка: ";
+		float del;
+		int i = 0;
+		while (i < SIZE) {
+			cin >> del;
+			spisok.push_back(del);
+			i++;
+		}
+	}
+	void get() { //переопределение метода get()
+		cout << "Список: ";
+		for (auto i = spisok.begin(); i != spisok.end(); i++) {
+			cout << *i << " ";
+		}
+	}
+	void sum() { //переопределение метода sum()
+		float sum = 0;
+		for (auto i = spisok.begin(); i != spisok.end(); i++) {
+			sum += *i;
+		}
+		cout << "\nСумма списка: " << sum << endl;
+	}
+};
+int main() {
+	setlocale(LC_ALL, "rus");
+	//Массив
+	cout << "_________________МАССИВ_________________" << endl;
+	Array array;
+	array.set();
+	cout << "Вывод массива:\n";
+	array.get();
+	array.sum();
+	cout << endl << endl;
+
+	//Вектор
+	cout << "_________________ВЕКТОР_________________" << endl;
+	Vector vect;
+	vect.set();
+	cout << "Вывод вектора:\n";
+	vect.get();
+	vect.sum();
+	cout  << endl << endl;
+
+	//Список
+	cout << "_________________СПИСОК_________________" << endl;
+	List spisok;
+	spisok.set();
+	cout << "Вывод списка:\n";
+	spisok.get();
+	spisok.sum();
+	cout <<  endl << endl;
+	system("pause>null");
+	return 0;
+}

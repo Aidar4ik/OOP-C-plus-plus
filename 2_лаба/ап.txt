@@ -1,0 +1,67 @@
+#include <iostream>
+#include <string>
+
+using namespace std;
+using Mirik = string;
+class Acc {
+private:
+	const char* name;
+	int id;
+	int balance;
+public:
+
+	Acc(void) {
+		name = "";
+		id = NULL;
+		balance = 0;
+	}
+	Acc(const char *n,int id,int b):name(n),id(id),balance(b) {}
+
+	~Acc() {
+		std::cout << "Memory cleaned" << std::endl;
+	}
+
+	void Output(int a) {
+		balance = balance - a;
+	}
+	void Input(int a) {
+		balance = balance + a;
+	}
+	void setName(const char* a) {
+		name = a;
+	}
+	std::string getName() {
+		return name;
+	}
+	int getBalance() {
+		return balance;
+	}
+	void setID(int a) {
+		id = a;
+	}
+	int getID() {
+		return id;
+	}
+
+
+};
+
+
+int main() {
+
+	setlocale(LC_ALL, "");
+	Mirik a="loh";
+	Acc f1;
+	Acc f2("berembek",20,5);
+	f1.setName("Adil");
+	f1.setID(0);
+	f1.Input(200);
+	f1.Output(50);
+	std::cout << f1.getID() << " | " << f1.getName() << " | " << f1.getBalance() << "$ | " << std::endl;
+
+	std::cout << f2.getID() << " | " << f2.getName() << " | " << f2.getBalance() << "$ | " << std::endl;
+
+
+	system("pause");
+	return 0;
+}

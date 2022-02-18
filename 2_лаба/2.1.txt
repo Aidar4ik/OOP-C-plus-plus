@@ -1,0 +1,115 @@
+#include <iostream>
+#include <conio.h>
+#include <vector>
+#include <iomanip>
+#include <string>
+#include <Windows.h>
+#include <time.h>
+using namespace std;
+
+
+class Timer {
+private:
+	//поля класса
+	int seconds;
+
+public:
+	//методы класса
+	// секунды задаются строкой
+	Timer(char* t) {
+		seconds = atoi(t);
+	}
+	// секунды задаются целым числом
+	Timer(int s) {
+		seconds = s;
+	}
+	// время задается в минутах и секундах
+	Timer(int min, int sec) {
+		seconds = (min * 60) + sec;
+	}
+
+	~Timer() {
+		cout << "Данные удалены" << endl;
+	}
+
+	void run() {
+		clock_t t1, t2;
+		t1 = t2 = clock() / CLK_TCK;
+		
+		while (seconds) {
+			if (t1 / CLK_TCK + 1 <= (t2 = clock()) / CLK_TCK) {
+				system("cls");
+				seconds--;
+				cout << "отсчёт: " << seconds;
+				if (seconds == 0) {
+					system("cls");
+					cout << "Звонок" << endl; // звонок
+					Beep(2000, 1000);
+				}
+				t1 = t2;
+			}
+		}
+		
+		
+
+	}
+
+
+};
+
+
+void menu() {                                             //ГЛАВНАЯ МЕНЮШКА, УПРАВЛЯЕТ ПОСЛЕДОВАТЕЛЬНОСТЬЮ ВЫЗОВА ВСЕХ МЕТОДОВ КЛАССА
+
+	int s=0, m=0;
+	char st[1000];
+
+	while (true) {
+		system("cls");
+		cout << "1 - Ввести в секундах" << endl;
+		cout << "2 - Ввести секунды в string" << endl;
+		cout << "3 - Ввести в минутах и секундах" << endl;
+
+		cout << "0 - выход" << endl;
+		cout << "Ответ пользователя: ";
+		int chouse;
+		while (!(cin >> chouse)) {
+			cout << "Вы можете вводить только целочисленное значение. Повторите ввод :\n";
+			cin.clear();
+			while (cin.get() != '\n');
+		}
+		if (chouse == 1) {
+			cout << "Введите секунду: "; cin >> s;
+			Timer part(s);
+			part.run();
+			_getch();
+		}
+		else if (chouse == 2) {
+			cout << "Введите секунду: "; cin >> st;
+			Timer part(st);
+			part.run();
+			_getch();
+		}
+		else if (chouse == 3) {
+			cout << "Введите минуту: "; cin >> m;
+			cout << "Введите секунду: "; cin >> s;
+			Timer part(m, s);
+			part.run();
+			_getch();
+		}
+		else if (chouse == 0) {
+			_getch();  exit(1);
+		}
+		else {
+			cout << "\n\n некорректный ввод. используйте цифры 1 - 3 для управления и 0 для выхода\n"; _getch(); break;
+		}
+
+	}
+
+}
+int main() {                         //ГЛАВНАЯ ФУНКЦИЯ MAIN, КОТОРАЯ МЕНЯ ЯЗЫК НА КИРИЛЛИЦУ И ВЫЗЫВАЕТ МЕНЮ
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+	setlocale(LC_ALL, "RUS");
+	menu();
+}
+

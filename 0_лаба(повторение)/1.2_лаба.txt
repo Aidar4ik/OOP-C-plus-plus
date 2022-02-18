@@ -1,0 +1,186 @@
+#include <iostream>
+using namespace std;
+
+double power(double n, int p = 2) {
+	double nn = 1;
+	for (int i = 1; i <= p; i++) {
+		nn = nn * n;
+	}
+	return nn;
+}
+
+char power(char n, int p = 2) {
+	char nn = 1;
+	for (int i = 1; i <= p; i++) {
+		nn = nn * n;
+	}
+	return nn;
+}
+short int power(short int n, int p = 2) {
+	short int nn = 1;
+	for (int i = 1; i <= p; i++) {
+		nn = nn * n;
+	}
+	return nn;
+}
+long int power(long int n, int p = 2) {
+	long int nn = 1;
+	for (int i = 1; i <= p; i++) {
+		nn = nn * n;
+	}
+	return nn;
+}
+float power(float n, int p = 2) {
+	float nn = 1;
+	for (int i = 1; i <= p; i++) {
+		nn = nn * n;
+	}
+	return nn;
+}
+int main() {
+	setlocale(LC_ALL, "rus");
+	int p = 2;
+	double n;
+	char n1;
+	short int n2;
+	long int n3;
+	float n4;
+
+	int a;
+	cout << "1 - double: "<<endl;
+	cout << "2 - char: " << endl;
+	cout << "3 - short int: " << endl;
+	cout << "4 - long int: " << endl;
+	cout << "5 - float: " << endl;
+	cout << "Ответ пользователя: ";
+	cin >> a;
+
+	if (a == 1) {
+		cout << "введите: ";
+		cin >> n;
+		cout << "хотите ввести степень? \n 1 - да \n 2 - нет" << endl;
+		cout << "ответ пользователя: ";
+		cin >> a;
+		if (a == 1) {
+			cout << "степень должен быть\n 1) =2 \n 2) >2" << endl;
+			cout << "ответ пользователя: ";
+			cin >> p;
+			if (p == 2) {
+				cout << "результат = " << power(n,p) << endl;
+			}
+			else if (p > 2) {
+				cout << "результат = " << power(n, p) << endl;
+			}
+			else {
+				cout << "Ошибка" << endl;
+			}
+		}
+		else {
+			cout << "результат = " << power(n, p) << endl;
+
+		}
+	}
+	else if (a == 2) {
+		cout << "введите: ";
+		cin >> n1;
+		cout << "хотите ввести степень? \n 1 - да \n 2 - нет" << endl;
+		cout << "ответ пользователя: ";
+		cin >> a;
+		if (a == 1) {
+			cout << "степень должен быть\n 1) =2 \n 2) >2" << endl;
+			cout << "ответ пользователя: ";
+			cin >> p;
+			if (p == 2) {
+				cout << "результат = " << power(n1, p) << endl;
+			}
+			else if (p > 2) {
+				cout << "результат = " << power(n1, p) << endl;
+			}
+			else {
+				cout << "Ошибка" << endl;
+			}
+		}
+		else {
+			cout << "результат = " << power(n1, p) << endl;
+
+		}
+	}
+	else if (a == 3) {
+		cout << "введите: ";
+		cin >> n2;
+		cout << "хотите ввести степень? \n 1 - да \n 2 - нет" << endl;
+		cout << "ответ пользователя: ";
+		cin >> a;
+		if (a == 1) {
+			cout << "степень должен быть\n 1) =2 \n 2) >2" << endl;
+			cout << "ответ пользователя: ";
+			cin >> p;
+			if (p == 2) {
+				cout << "результат = " << power(n2, p) << endl;
+			}
+			else if (p > 2) {
+				cout << "результат = " << power(n2, p) << endl;
+			}
+			else {
+				cout << "Ошибка" << endl;
+			}
+		}
+		else {
+			cout << "результат = " << power(n2, p) << endl;
+
+		}
+	}
+	else if (a == 4) {
+		cout << "введите: ";
+		cin >> n3;
+		cout << "хотите ввести степень? \n 1 - да \n 2 - нет" << endl;
+		cout << "ответ пользователя: ";
+		cin >> a;
+		if (a == 1) {
+			cout << "степень должен быть\n 1) =2 \n 2) >2" << endl;
+			cout << "ответ пользователя: ";
+			cin >> p;
+			if (p == 2) {
+				cout << "результат = " << power(n3, p) << endl;
+			}
+			else if (p > 2) {
+				cout << "результат = " << power(n3, p) << endl;
+			}
+			else {
+				cout << "Ошибка" << endl;
+			}
+		}
+		else {
+			cout << "результат = " << power(n3, p) << endl;
+
+		}
+	}
+	else if (a == 5) {
+		cout << "введите: ";
+		cin >> n4;
+		cout << "хотите ввести степень? \n 1 - да \n 2 - нет" << endl;
+		cout << "ответ пользователя: ";
+		cin >> a;
+		if (a == 1) {
+			cout << "степень должен быть\n 1) =2 \n 2) >2" << endl;
+			cout << "ответ пользователя: ";
+			cin >> p;
+			if (p == 2) {
+				cout << "результат = " << power(n4, p) << endl;
+			}
+			else if (p > 2) {
+				cout << "результат = " << power(n4, p) << endl;
+			}
+			else {
+				cout << "Ошибка" << endl;
+			}
+		}
+		else {
+			cout << "результат = " << power(n4, p) << endl;
+
+		}
+	}
+	
+}
+
+

@@ -1,0 +1,74 @@
+#include <iostream>
+
+using namespace std;
+
+class Fire{
+
+	//поле класса
+private:
+	static int p;		
+	static int n;
+
+public:
+
+	// статичный метод 
+	static int get_n()
+	{	 
+		return n;
+	}
+
+	static int fireResult(int kol) {	// результат стрельбы
+		int t;
+		n = kol;
+		t = kol / p;
+
+		cout << "Попаданий: " << t << endl;
+
+		if (t > 0){
+			return 1;
+		}
+		else {
+			return 0;
+		}
+	}
+
+};
+
+int Fire::n = 0;  //определяем n вне класса
+int Fire::p = 30;  //определяем p вне класса
+
+
+int main() {
+	setlocale(LC_ALL,"RUS");
+	int choice, k;
+
+	//создания объекта
+	Fire shoot1, shoot2;
+
+	cout << "Введите количество выстрелов: "; cin >> k;
+	if (1 == shoot1.fireResult(k)) {
+		cout << "Результат = 1, цель уничтожена!" << endl;
+	}
+	else {
+		cout << "Результат = 0, самолёт не сбит!" << endl;
+	}
+	cout << endl << endl;
+
+
+	cout << "Введите количество выстрелов: "; cin >> k;
+	if (1 == shoot2.fireResult(k)) {
+		cout << "Результат = 1, цель уничтожена!" << endl;
+	}
+	else {
+		cout << "Результат = 0, самолёт не сбит!" << endl;
+	}
+	cout << endl;
+
+	cout << "Количество выстрелов у двух разных объетов одинаковая, потому что мы использовали статическое поле" << endl;
+	cout << "_________________________________________________" << endl;
+	cout << "Объект shoot1, кол-во выстрелов: " << shoot1.get_n() << endl;
+	cout << "Объект shoot2, кол-во выстрелов: " << shoot2.get_n() << endl;
+	
+	system("pause>null");
+	return 0;
+}

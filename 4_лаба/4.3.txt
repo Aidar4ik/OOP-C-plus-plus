@@ -1,0 +1,59 @@
+#include<iostream>
+using namespace std;
+
+class Area {                // Класс вычисления площади прямоугольника и квадрата
+private:                   
+	int width;              // Поля класса
+	int length;
+public:
+	Area(int a, int b) {    // Конструтор
+		width = a;
+		length = b;
+	}
+	Area(int a) {
+		length = a;
+	}
+	int rect_area(int a, int b) { // Перегруженный метод вычисляющая площадь
+		return a * b;
+	}
+	int rect_area(int a) {
+		return a * a;
+	}
+};
+
+int main() {
+	setlocale(LC_ALL, "rus");
+	int choose, w, l;
+
+	while (true) {
+		cout << "1 - вычислить площадь прямоугольника" << endl;
+		cout << "2 - вычислить площадь квадрата" << endl;
+		cout << "0 - выход" << endl;
+		cout << "ответ пользователя: ";
+		cin >> choose;
+		if (choose == 1) {
+			cout << "введите длину:";
+			cin >> l;
+			cout << "введите ширину:";
+			cin >> w;
+
+			Area area1(l, w);
+			cout << "площадь прямоугольника = " << area1.rect_area(l, w) << endl;
+		}
+		else if (choose == 2) {
+			cout << "введите длину:";
+			cin >> l;
+			Area area2(l);
+			cout << "площадь квадрата = " << area2.rect_area(l) << endl;
+		}
+		else if (choose == 0) {
+			exit(0);
+		}
+		else {
+		    cout << "\nнекорректный ввод. используйте цифры 1 - 2 для управления и 0 для выхода\n";
+		}
+		system("pause>null");
+		system("cls");
+	}
+
+}

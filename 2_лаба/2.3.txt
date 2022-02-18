@@ -1,0 +1,129 @@
+#include <iostream>
+#include <conio.h>
+#include <vector>
+#include <iomanip>
+#include <string>
+#include <Windows.h>
+using namespace std;
+const int Day = 15;
+const int Month = 2;
+const int Year = 2020;
+
+class Soft {
+private:
+	//поля класса
+	string name;
+	string razrab;
+	float MemorySize;
+	int year;
+	int month;
+	int day;
+
+public:
+	//методы класса
+	Soft(){
+		name = "";
+		razrab = "";
+		MemorySize = 0;
+		year = 0;
+		month = 0;
+		day = 0;
+	}
+	~Soft() {	
+		//cout << "Данные удалены" << endl;
+	}
+
+	void set(string n, string r, float M, int y, int m, int d) {        
+		name = n;
+		razrab = r;
+		MemorySize = M;
+		day = d;
+		month = m;
+		year = y;
+	}
+	void get() {
+		cout << setiosflags(ios::left) << setw(16) << name;
+		cout << setiosflags(ios::left) << setw(16) << razrab;
+		cout << setiosflags(ios::left) << setw(16) << MemorySize;
+		cout << setiosflags(ios::left) << day << "." << month << "." << year << endl;
+	}
+	void count(vector<Soft> d) {
+
+		int vrem_day, vrem_month, vrem_year;
+		if (day < Day) {
+			vrem_day = abs(Day - day);
+		}
+		vrem_day = abs(day - Day);
+		if (month == 1 || month == 3 || month == 5 || month == 7 || month == 8 || month == 10 || month == 12) {
+			vrem_month = abs(month - Month) * 31;
+		}
+		vrem_month = abs(month - Month) * 30;
+		vrem_year = (year - Year) * 365;
+
+		if (day == Day && month == Month && year == Year) {
+			cout << "Сегодня последний день лицензии для " << name << "\n";
+		}
+		else if (year < Year  || year==Year && month<Month || year==Year && month ==Month && day<Day) {
+			cout << "Срок лицензии для программы " << name << "истёк\n";
+		}
+		else {
+			cout << "До конца истечения программы " << name << " осталось дней: " << vrem_day + vrem_month + vrem_year <<endl;
+		}
+		
+
+	}
+};
+
+
+void menu() {                                             //ГЛАВНАЯ МЕНЮШКА, УПРАВЛЯЕТ ПОСЛЕДОВАТЕЛЬНОСТЬЮ ВЫЗОВА ВСЕХ МЕТОДОВ КЛАССА
+	vector<Soft>danye; 
+	Soft proga;
+	int day, month, year;
+	string name, razrab;
+	float MemorySize;
+	while (true) {
+		system("cls");
+		cout << "1 - добавить" << endl;
+		cout << "2 - вывод" << endl;
+		cout << "3 - подсчёт" << endl;
+		cout << "0 - выход" << endl;
+		cout << "Ответ пользователя: ";
+		int chouse;
+		while (!(cin >> chouse)) {
+			cout << "Вы можете вводить только целочисленное значение. Повторите ввод :\n";
+			cin.clear();
+			while (cin.get() != '\n');
+		}
+		switch (chouse)
+		{
+		case 1: 
+			cout << "название программы: "; cin >> name; 
+			cout << "производитель: "; cin >> razrab;
+			cout << "объем занимаемой памяти: "; cin >> MemorySize;
+			cout << "дата завершения лицензии: "; cin >> day; cin >> month; cin >> year;
+
+			proga.set(name, razrab, MemorySize, year, month, day);
+			danye.push_back(proga); _getch();  break;
+
+		case 2:
+			cout << setw(16) << "программа" << setw(16) << "разработчик" << setw(16) << "размер памяти" << setw(16) << "дата завершении лицензии" << endl;
+			for (int i = 0; i < danye.size(); i++) {
+				danye[i].get();
+			} _getch();  break;
+
+		case 3:
+			proga.count(danye); _getch();  break;
+
+		case 0: exit(1);
+		default: cout << "\n\n некорректный ввод. используйте цифры 1 - 4 для управления и 0 для выхода\n"; _getch(); break;
+		}
+	}
+
+}
+int main() {                         //ГЛАВНАЯ ФУНКЦИЯ MAIN, КОТОРАЯ МЕНЯ ЯЗЫК НА КИРИЛЛИЦУ И ВЫЗЫВАЕТ МЕНЮ
+	SetConsoleCP(1251);
+	SetConsoleOutputCP(1251);
+	setlocale(LC_ALL, "RUS");
+	menu();
+}
+
